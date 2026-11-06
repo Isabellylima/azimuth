@@ -13,7 +13,7 @@
     "not_found_handling": "none",
     "run_worker_first": ["/api/*"]
   },
-  "kv_namespaces": [{ "binding": "BOOKINGS", "id": "26189829699d4deaa1ed159bbe48a970" }],
+  "kv_namespaces": [{ "binding": "BOOKINGS", "id": "f58e5290912049208623009cba10a1e3" }],
   "vars": {
     "BOOKING_TO": "azimuthboatrent@gmail.com",
     "FROM_EMAIL": "reservas@azimuthholidays.com"
