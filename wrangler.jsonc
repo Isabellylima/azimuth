@@ -1,0 +1,26 @@
+{
+  // Azimuth Sailing Holidays — Cloudflare Worker (site + booking API)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "azimuth",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-11-01",
+  "observability": { "enabled": true },
+  "build": { "command": "FETCH_PHOTOS=1 node build.mjs" },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+    "run_worker_first": ["/api/*"]
+  },
+  "kv_namespaces": [{ "binding": "BOOKINGS", "id": "26189829699d4deaa1ed159bbe48a970" }],
+  "vars": {
+    "BOOKING_TO": "azimuthboatrent@gmail.com",
+    "FROM_EMAIL": "reservas@azimuthholidays.com"
+  }
+  // Secrets (set in the dashboard → Settings → Variables and Secrets):
+  //   ADMIN_KEY       long random string (signs confirm/decline links, opens /api/admin?key=…)
+  //   RESEND_API_KEY  optional, only if Cloudflare Email Service is not used
+  // E-mail via Cloudflare Email Service, once azimuthholidays.com is onboarded:
+  //   "send_email": [{ "name": "EMAIL" }]
+}

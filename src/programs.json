@@ -1,0 +1,363 @@
+[
+ {
+  "id": "half-day",
+  "kind": "day",
+  "title": {
+   "en": "Half-Day Sailing Tour",
+   "pt": "Passeio à Vela de Meio Dia"
+  },
+  "maxGuests": 10,
+  "times": [
+   {
+    "id": "morning",
+    "label": {
+     "en": "Morning · 10:00–13:00",
+     "pt": "Manhã · 10:00–13:00"
+    },
+    "slots": [
+     "m"
+    ]
+   },
+   {
+    "id": "afternoon",
+    "label": {
+     "en": "Afternoon · 14:00–17:00",
+     "pt": "Tarde · 14:00–17:00"
+    },
+    "slots": [
+     "a"
+    ]
+   }
+  ],
+  "price": {
+   "type": "season",
+   "high": 600,
+   "low": 400,
+   "highMonths": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "unit": {
+    "en": "per boat (private)",
+    "pt": "por barco (privado)"
+   }
+  },
+  "months": "all",
+  "slug": {
+   "en": "half-day-sailing-tour-lagos",
+   "pt": "passeio-vela-meio-dia-lagos"
+  }
+ },
+ {
+  "id": "full-day",
+  "kind": "day",
+  "title": {
+   "en": "Full-Day Sailing Tour",
+   "pt": "Passeio à Vela de Dia Inteiro"
+  },
+  "maxGuests": 10,
+  "times": [
+   {
+    "id": "day",
+    "label": {
+     "en": "Full day · 10:00–17:00",
+     "pt": "Dia inteiro · 10:00–17:00"
+    },
+    "slots": [
+     "m",
+     "a"
+    ]
+   }
+  ],
+  "price": {
+   "type": "season",
+   "high": 1000,
+   "low": 650,
+   "highMonths": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "unit": {
+    "en": "per boat (private)",
+    "pt": "por barco (privado)"
+   }
+  },
+  "months": "all",
+  "slug": {
+   "en": "full-day-sailing-tour-lagos",
+   "pt": "passeio-vela-dia-inteiro-lagos"
+  }
+ },
+ {
+  "id": "sunset",
+  "kind": "day",
+  "title": {
+   "en": "Sunset Sailing",
+   "pt": "Pôr do Sol à Vela"
+  },
+  "maxGuests": 10,
+  "times": [
+   {
+    "id": "sunset",
+    "label": {
+     "en": "Sunset · 18:00–20:30",
+     "pt": "Pôr do sol · 18:00–20:30"
+    },
+    "slots": [
+     "e"
+    ]
+   }
+  ],
+  "price": {
+   "type": "fixed",
+   "amount": 500,
+   "unit": {
+    "en": "per boat (private)",
+    "pt": "por barco (privado)"
+   }
+  },
+  "months": [
+   6,
+   7,
+   8,
+   9
+  ],
+  "slug": {
+   "en": "sunset-sailing-lagos",
+   "pt": "passeio-vela-por-do-sol-lagos"
+  }
+ },
+ {
+  "id": "multi-day",
+  "kind": "range",
+  "title": {
+   "en": "Multi-Day Private Charter",
+   "pt": "Charter Privado de Vários Dias"
+  },
+  "maxGuests": 8,
+  "minNights": 3,
+  "price": {
+   "type": "season",
+   "high": 3000,
+   "low": 1500,
+   "highMonths": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "from": true,
+   "unit": {
+    "en": "from, per charter",
+    "pt": "desde, por charter"
+   }
+  },
+  "months": "all",
+  "slug": {
+   "en": "multi-day-private-sailing-charter-algarve",
+   "pt": "charter-privado-varios-dias-algarve"
+  }
+ },
+ {
+  "id": "lagos-porto-santo",
+  "kind": "fixed",
+  "title": {
+   "en": "Sea Crossing: Lagos → Porto Santo",
+   "pt": "Travessia: Lagos → Porto Santo"
+  },
+  "maxGuests": 5,
+  "departures": [
+   {
+    "start": "2027-04-03",
+    "end": "2027-04-10",
+    "checkin": "2027-04-03",
+    "depart": "2027-04-04"
+   }
+  ],
+  "options": [
+   {
+    "id": "person",
+    "label": {
+     "en": "Per person",
+     "pt": "Por pessoa"
+    },
+    "price": 1250,
+    "per": "person",
+    "seats": 1
+   },
+   {
+    "id": "couple",
+    "label": {
+     "en": "Couple (shared cabin)",
+     "pt": "Casal (cabine partilhada)"
+    },
+    "price": 2000,
+    "per": "booking",
+    "seats": 2
+   }
+  ],
+  "slug": {
+   "en": "sea-crossing-lagos-porto-santo-2027",
+   "pt": "travessia-lagos-porto-santo-2027"
+  }
+ },
+ {
+  "id": "porto-santo-azores",
+  "kind": "fixed",
+  "title": {
+   "en": "Sea Crossing: Porto Santo → Azores",
+   "pt": "Travessia: Porto Santo → Açores"
+  },
+  "maxGuests": 5,
+  "departures": [
+   {
+    "start": "2027-04-16",
+    "end": "2027-04-24",
+    "checkin": "2027-04-16",
+    "depart": "2027-04-17"
+   }
+  ],
+  "options": [
+   {
+    "id": "person",
+    "label": {
+     "en": "Per person",
+     "pt": "Por pessoa"
+    },
+    "price": 1500,
+    "per": "person",
+    "seats": 1
+   },
+   {
+    "id": "couple",
+    "label": {
+     "en": "Couple (shared cabin)",
+     "pt": "Casal (cabine partilhada)"
+    },
+    "price": 2500,
+    "per": "booking",
+    "seats": 2
+   }
+  ],
+  "slug": {
+   "en": "sea-crossing-porto-santo-azores-2027",
+   "pt": "travessia-porto-santo-acores-2027"
+  }
+ },
+ {
+  "id": "azores-10-days",
+  "kind": "fixed",
+  "title": {
+   "en": "Azores Inter-Island Sailing — 10 Days",
+   "pt": "Açores entre Ilhas à Vela — 10 Dias"
+  },
+  "maxGuests": 6,
+  "departures": [
+   {
+    "start": "2027-05-20",
+    "end": "2027-05-29"
+   },
+   {
+    "start": "2027-06-17",
+    "end": "2027-06-26"
+   },
+   {
+    "start": "2027-07-01",
+    "end": "2027-07-10"
+   },
+   {
+    "start": "2027-07-31",
+    "end": "2027-08-09"
+   },
+   {
+    "start": "2027-08-13",
+    "end": "2027-08-22"
+   }
+  ],
+  "options": [
+   {
+    "id": "shared",
+    "label": {
+     "en": "Shared cabin — per person",
+     "pt": "Cabine partilhada — por pessoa"
+    },
+    "price": 2000,
+    "per": "person",
+    "seats": 1
+   },
+   {
+    "id": "private-cabin",
+    "label": {
+     "en": "Private cabin",
+     "pt": "Cabine privada"
+    },
+    "price": 2500,
+    "per": "booking",
+    "seats": 2
+   },
+   {
+    "id": "private-boat",
+    "label": {
+     "en": "Private departure — full boat",
+     "pt": "Saída privada — barco inteiro"
+    },
+    "price": 9000,
+    "per": "booking",
+    "seats": 6,
+    "wholeBoat": true
+   }
+  ],
+  "slug": {
+   "en": "azores-island-hopping-sailing-10-days",
+   "pt": "acores-velejar-entre-ilhas-10-dias"
+  }
+ },
+ {
+  "id": "azores-7-days",
+  "kind": "fixed",
+  "title": {
+   "en": "Azores Private Week Charter — 7 Days",
+   "pt": "Charter Privado nos Açores — 7 Dias"
+  },
+  "maxGuests": 6,
+  "departures": [
+   {
+    "start": "2027-05-08",
+    "end": "2027-05-14"
+   },
+   {
+    "start": "2027-06-07",
+    "end": "2027-06-13"
+   },
+   {
+    "start": "2027-07-17",
+    "end": "2027-07-23"
+   },
+   {
+    "start": "2027-08-28",
+    "end": "2027-09-03"
+   }
+  ],
+  "options": [
+   {
+    "id": "private-boat",
+    "label": {
+     "en": "Private charter — up to 6 guests",
+     "pt": "Charter privado — até 6 convidados"
+    },
+    "price": 7700,
+    "per": "booking",
+    "seats": 6,
+    "wholeBoat": true
+   }
+  ],
+  "slug": {
+   "en": "azores-private-sailing-charter-7-days",
+   "pt": "acores-charter-privado-vela-7-dias"
+  }
+ }
+]
