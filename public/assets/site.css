@@ -246,3 +246,9 @@ html,body{overflow-x:hidden}
 .booking{top:92px;max-height:calc(100vh - 108px);overflow:auto}
 @media(max-width:1000px){.booking{position:static;max-height:none;overflow:visible}}
 @media(max-width:620px){.wa{right:14px;bottom:14px;width:52px;height:52px}footer{padding-bottom:84px}}
+
+/* booking widget: breathing room between guests, summary and buttons */
+.booking .stepper{margin-bottom:22px}
+.booking .summary{margin:4px 0 20px}
+.booking [data-next]{margin-top:4px}
+.booking .note{margin-top:14px}

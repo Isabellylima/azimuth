@@ -9,6 +9,9 @@ import { SITE, PHOTOS, PROGRAMS, BOAT, FAQ, photoRemote } from './src/content.mj
 const OUT = 'public';
 const legacy = JSON.parse(await readFile('src/legacy.json', 'utf8'));
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const { createHash } = await import('node:crypto');
+const ver = async f => createHash('sha1').update(await readFile(join('public/assets', f))).digest('hex').slice(0, 10);
+const V = { css: await ver('site.css'), site: await ver('site.js'), booking: await ver('booking.js') };
 
 // ------------------------------------------------------------- photos
 const localPhotos = {};
@@ -140,7 +143,7 @@ ${hreflang}
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Jost:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=${BUILD_DATE}">
+<link rel="stylesheet" href="/assets/site.css?v=${V.css}">
 ${[orgLd(L), ...ld].map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body>
@@ -167,7 +170,7 @@ ${body}
  <div class="legal"><span>© ${new Date().getFullYear()} ${SITE.legalName} — ${u.rights}</span><span>Marina de Lagos · 37°06′N 8°40′W</span></div>
 </div></footer>
 <a class="wa" href="https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(L === 'pt' ? 'Olá! Gostaria de saber mais sobre as experiências à vela da Azimuth.' : 'Hello! I would like to know more about Azimuth sailing experiences.')}" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="tip">${u.waTip}</span>${waIcon}</a>
-<script src="/assets/site.js?v=${BUILD_DATE}" defer></script>
+<script src="/assets/site.js?v=${V.site}" defer></script>
 ${scripts}
 </body></html>`;
 }
@@ -308,7 +311,7 @@ function programPage(p, L) {
   const minP = p.kind === 'fixed' ? Math.min(...p.options.map(o => o.price)) : p.price.type === 'season' ? p.price.low : p.price.amount;
   const desc = `${p.tagline[L]} ${p.duration[L]}. ${u.from[0].toUpperCase() + u.from.slice(1)} ${eur(minP, L)}. ${L === 'pt' ? 'Reserve online a sua data.' : 'Book your date online.'}`;
   return layout({ L, path: R.prog(p, L), alt: R.prog(p, other), title: `${p.seoTitle[L]} | Azimuth`, desc, image: p.photo, body, ld,
-    scripts: `<script src="/assets/booking.js?v=${BUILD_DATE}" defer></script>` });
+    scripts: `<script src="/assets/booking.js?v=${V.booking}" defer></script>` });
 }
 
 function boatPage(L) {
