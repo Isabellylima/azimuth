@@ -168,6 +168,7 @@ ${body}
    <li><a href="https://wa.me/${SITE.whatsapp}" rel="noopener">WhatsApp</a> · <a href="${SITE.instagram}" rel="noopener">Instagram</a></li><li><a href="mailto:${SITE.email}">${SITE.email}</a></li></ul></div>
  </div>
  <div class="legal"><span>© ${new Date().getFullYear()} ${SITE.legalName} — ${u.rights}</span><span>Marina de Lagos · 37°06′N 8°40′W</span></div>
+ <p class="credit">Made by <a href="https://heyimplement.com" target="_blank" rel="noopener">Implement</a></p>
 </div></footer>
 <a class="wa" href="https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(L === 'pt' ? 'Olá! Gostaria de saber mais sobre as experiências à vela da Azimuth.' : 'Hello! I would like to know more about Azimuth sailing experiences.')}" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="tip">${u.waTip}</span>${waIcon}</a>
 <script src="/assets/site.js?v=${V.site}" defer></script>
