@@ -139,6 +139,21 @@ function tripLd(p, L) {
 const waIcon = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.6l-.4-.3-3.8 1.2 1.2-3.7-.3-.4a10.4 10.4 0 0 1-1.7-5.8C5.1 10 10 5.3 16 5.3s10.9 4.7 10.9 10.5S22 26.4 16 26.4zm6-7.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.2 1.3 3.4c.2.2 2.3 3.5 5.6 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>';
 const menuIcon = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>';
 
+// ---------- "Next sea crossing" pop-up: data for every crossing; site.js picks the next one by date
+function crossingData(L, path) {
+  const list = PROGRAMS.filter(p => p.group === 'atlantic' && p.kind === 'fixed' && p.id.includes('porto-santo'))
+    .flatMap(p => p.departures.map(d => ({
+      id: p.id, url: R.prog(p, L), title: p.title[L], from: p.from, to: p.to, duration: p.duration[L], tagline: p.tagline[L],
+      start: d.depart || d.start, end: d.end, dep: d.start, max: p.maxGuests,
+      price: Math.min(...p.options.filter(o => o.per === 'person').map(o => o.price)), img: src(p.photo, 750), alt: PHOTOS[p.photo][L === 'pt' ? 2 : 1],
+    })));
+  if (!list.length || /contact|termos|terms/.test(path)) return '';
+  const t = L === 'pt'
+    ? { eyebrow: 'Próxima travessia', in: 'Partida em', days: 'dias', from: 'desde', pp: '/ pessoa', left: 'lugares livres de', full: 'Esgotada', book: 'Reservar lugar', all: 'Ver todas as travessias', close: 'Fechar', allUrl: '/pt/#atlantic' }
+    : { eyebrow: 'Next sea crossing', in: 'Departs in', days: 'days', from: 'from', pp: '/ person', left: 'places left of', full: 'Sold out', book: 'Book your place', all: 'See all crossings', close: 'Close', allUrl: '/#atlantic' };
+  return `<script type="application/json" id="az-crossing">${JSON.stringify({ L, path, t, list }).replace(/</g, '\\u003c')}</script>`;
+}
+
 function layout({ L, path, alt, title, desc, image = 'aerial', body, ld = [], solid = false, scripts = '' }) {
   const u = U[L], home = R.home[L];
   const altLang = L === 'en' ? 'pt' : 'en';
@@ -201,6 +216,7 @@ ${body}
  <p class="credit">Made by <a href="https://heyimplement.com" target="_blank" rel="noopener">Implement</a></p>
 </div></footer>
 <a class="wa" href="https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(L === 'pt' ? 'Olá! Gostaria de saber mais sobre as experiências à vela da Azimuth.' : 'Hello! I would like to know more about Azimuth sailing experiences.')}" target="_blank" rel="noopener" aria-label="WhatsApp"><span class="tip">${u.waTip}</span>${waIcon}</a>
+${crossingData(L, path)}
 <script src="/assets/site.js?v=${V.site}" defer></script>
 ${scripts}
 </body></html>`;

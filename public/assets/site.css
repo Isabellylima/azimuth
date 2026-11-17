@@ -307,3 +307,27 @@ footer .social{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 footer .social a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);color:#d7e6ef;transition:.2s}
 footer .social a:hover{background:#fff;color:var(--navy-ink);border-color:#fff;transform:translateY(-2px)}
 footer .social svg{width:18px;height:18px}
+
+/* ---------- Next sea crossing pop-up */
+.xpop{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:rgba(7,28,42,.62);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s}
+.xpop.on{opacity:1}
+.xpop-card{position:relative;width:min(860px,100%);max-height:calc(100vh - 32px);overflow:auto;display:grid;grid-template-columns:1fr 1.1fr;background:#fff;border-radius:18px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);transform:translateY(24px) scale(.98);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.xpop.on .xpop-card{transform:none}
+.xpop-img{position:relative;min-height:260px;background:var(--navy-deep)}
+.xpop-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.xpop-count{position:absolute;left:18px;bottom:18px;background:rgba(7,28,42,.78);color:#fff;border-radius:14px;padding:10px 16px;display:flex;flex-direction:column;align-items:center;line-height:1.1;backdrop-filter:blur(4px)}
+.xpop-count b{font:500 2.2rem var(--ff-head)}
+.xpop-count small{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#bcd3e0}
+.xpop-body{padding:36px 34px 30px}
+.xpop-body h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:.3em}
+.xpop-body h2 span{color:var(--sky)}
+.xpop-tag{color:#4a5a66;margin:0 0 16px}
+.xpop-facts{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:6px;font-size:.95rem}
+.xpop-facts li{padding-left:18px;position:relative}
+.xpop-facts li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--sky)}
+.xpop-seats b{color:#b5651d}
+.xpop-ctas{display:flex;flex-wrap:wrap;gap:10px}
+.xpop-x{position:absolute;top:12px;right:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--navy-deep);font-size:1.5rem;line-height:1;cursor:pointer;box-shadow:0 4px 14px -6px rgba(0,0,0,.4)}
+.xpop-x:hover{background:#fff}
+@media(max-width:700px){.xpop{align-items:end;padding:0}.xpop-card{grid-template-columns:1fr;border-radius:18px 18px 0 0;max-height:92vh;transform:translateY(40px)}.xpop-img{min-height:190px}.xpop-body{padding:24px 20px 26px}.xpop-ctas .btn{flex:1;justify-content:center;white-space:nowrap;padding:.85em 1em;font-size:.92rem}}
+@media (prefers-reduced-motion:reduce){.xpop,.xpop-card{transition:none}}

@@ -74,4 +74,66 @@
     const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
     addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); frame();
   }
+  // ---- "Next sea crossing" pop-up (once per visit, not again for 3 days after closing)
+  const cx = document.getElementById('az-crossing');
+  if (cx) (() => {
+    const D = JSON.parse(cx.textContent), t = D.t;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const next = D.list.filter(c => new Date(c.start + 'T00:00:00') > today).sort((a, b) => a.start.localeCompare(b.start))[0];
+    if (!next || location.pathname === next.url) return;
+    const store = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v); } catch (e) { return null; } };
+    const sess = (k, v) => { try { return v === undefined ? sessionStorage.getItem(k) : sessionStorage.setItem(k, v); } catch (e) { return null; } };
+    const key = 'az-cross-' + next.id + '-' + next.dep;
+    if (Number(store(key) || 0) > Date.now() || sess('az-cross-seen')) return;
+    const loc = D.L === 'pt' ? 'pt-PT' : 'en-GB';
+    const f = (d, o) => new Date(d + 'T12:00:00').toLocaleDateString(loc, o);
+    const dm = d => `${f(d, { day: 'numeric' })} ${f(d, { month: D.L === 'pt' ? 'long' : 'short' })}`;
+    const dates = `${dm(next.start)} – ${dm(next.end)} ${f(next.end, { year: 'numeric' })}`;
+    const days = Math.round((new Date(next.start + 'T00:00:00') - today) / 864e5);
+    const price = '€' + String(next.price).replace(/\B(?=(\d{3})+(?!\d))/g, D.L === 'pt' ? '.' : ',');
+    const box = document.createElement('div');
+    box.className = 'xpop'; box.hidden = true;
+    box.innerHTML = `<div class="xpop-card" role="dialog" aria-modal="true" aria-labelledby="xpop-h">
+      <button type="button" class="xpop-x" aria-label="${esc(t.close)}">×</button>
+      <div class="xpop-img"><img src="${esc(next.img)}" alt="${esc(next.alt)}" loading="lazy"><span class="xpop-count"><small>${esc(t.in)}</small><b>${days}</b><small>${esc(t.days)}</small></span></div>
+      <div class="xpop-body">
+        <span class="eyebrow">${esc(t.eyebrow)}</span>
+        <h2 id="xpop-h">${esc(next.from)} <span>→</span> ${esc(next.to)}</h2>
+        <p class="xpop-tag">${esc(next.tagline)}</p>
+        <ul class="xpop-facts"><li><b>${esc(dates)}</b></li><li>${esc(next.duration)}</li><li>${esc(t.from)} <b>${price}</b> ${esc(t.pp)}</li><li class="xpop-seats" hidden></li></ul>
+        <div class="xpop-ctas"><a class="btn" href="${esc(next.url)}#booking">${esc(t.book)} →</a><a class="btn ghost" href="${esc(t.allUrl)}">${esc(t.all)}</a></div>
+      </div></div>`;
+    document.body.appendChild(box);
+    fetch('/api/availability?program=' + encodeURIComponent(next.id)).then(r => r.json()).then(a => {
+      const left = next.max - ((a.seats || {})[next.dep] || 0), li = box.querySelector('.xpop-seats');
+      li.innerHTML = left > 0 ? `<b>${left}</b> ${esc(t.left)} ${next.max}` : `<b>${esc(t.full)}</b>`; li.hidden = false;
+    }).catch(() => {});
+    let lastFocus = null, shown = false;
+    const close = () => {
+      box.classList.remove('on'); store(key, Date.now() + 3 * 864e5);
+      setTimeout(() => { box.hidden = true; }, 300);
+      document.removeEventListener('keydown', onKey); lastFocus && lastFocus.focus && lastFocus.focus();
+    };
+    const onKey = e => {
+      if (e.key === 'Escape') close();
+      if (e.key === 'Tab') { // keep focus inside
+        const f = [...box.querySelectorAll('a,button')]; const i = f.indexOf(document.activeElement);
+        if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+      }
+    };
+    const show = () => {
+      if (shown || document.querySelector('.nav.open')) return; shown = true; sess('az-cross-seen', '1');
+      lastFocus = document.activeElement; box.hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('on')));
+      box.querySelector('.xpop-x').focus({ preventScroll: true });
+      document.addEventListener('keydown', onKey);
+    };
+    box.addEventListener('click', e => { if (e.target === box || e.target.closest('.xpop-x')) close(); });
+    box.querySelectorAll('.xpop-ctas a').forEach(a => a.addEventListener('click', () => store(key, Date.now() + 3 * 864e5)));
+    const timer = setTimeout(show, 9000);
+    const onScroll = () => { if (scrollY > (document.documentElement.scrollHeight - innerHeight) * 0.4) { clearTimeout(timer); show(); removeEventListener('scroll', onScroll); } };
+    addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('mouseout', e => { if (!e.relatedTarget && e.clientY <= 0) { clearTimeout(timer); show(); } });
+  })();
 })();
