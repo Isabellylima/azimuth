@@ -303,3 +303,7 @@ footer .credit a{color:#b9cfdc;text-decoration:underline;text-underline-offset:3
 .hero .wrap>*:nth-child(3){animation-delay:.24s}
 .hero .wrap>*:nth-child(4){animation-delay:.36s}
 @media (prefers-reduced-motion:reduce){.hero img.bg,.hero .wrap>*{animation:none}}
+footer .social{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+footer .social a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);color:#d7e6ef;transition:.2s}
+footer .social a:hover{background:#fff;color:var(--navy-ink);border-color:#fff;transform:translateY(-2px)}
+footer .social svg{width:18px;height:18px}
