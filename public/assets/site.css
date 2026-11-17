@@ -127,7 +127,7 @@ section{padding:clamp(64px,9vw,120px) 0}
 .specs span{font-size:.82rem;color:var(--muted)}
 
 /* widgets */
-.widget-box{min-height:240px;border-radius:var(--radius)}
+
 .widget-fallback{font-size:.95rem;color:var(--muted)}
 
 /* faq */
@@ -254,3 +254,52 @@ html,body{overflow-x:hidden}
 .booking .note{margin-top:14px}
 footer .credit{margin:18px 0 0;text-align:center;font-size:.78rem;color:#6f8a9b}
 footer .credit a{color:#b9cfdc;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- Google reviews (own code) */
+.rv-sum{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.rv-score{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy-deep);background:#fff;padding:10px 18px;border-radius:999px;box-shadow:0 6px 24px -14px rgba(7,28,42,.4)}
+.rv-score b{font:600 1.5rem var(--ff-head)}
+.rv-score>span:not(.stars){font-size:.92rem;color:#4a5a66}
+@media(max-width:620px){.rv-score{gap:8px;padding:8px 14px}.rv-score b{font-size:1.25rem}.rv-score>span:not(.stars){font-size:.82rem}}
+.g-ico{width:22px;height:22px;flex:none}
+.stars{color:#f5b301;letter-spacing:.08em;font-size:1rem;line-height:1}
+.rv-nav{display:flex;align-items:center;gap:10px}
+.rv-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--navy);background:transparent;color:var(--navy);font-size:1.1rem;cursor:pointer;transition:.2s}
+.rv-btn:hover{background:var(--navy);color:#fff}
+.btn.small{padding:.65em 1.2em;font-size:.92rem}
+.rv-track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 40px)/3);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 18px;scrollbar-width:thin;overscroll-behavior-x:contain}
+.rv-card{scroll-snap-align:start;background:#fff;border-radius:var(--radius);padding:22px 22px 18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px -22px rgba(7,28,42,.45)}
+.rv-card header{display:flex;align-items:center;gap:12px}
+.rv-card header div{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.rv-card header b{font-weight:600;color:var(--navy-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rv-card header small{color:#6b7a85;font-size:.82rem}
+.rv-card header img,.rv-card .av{width:40px;height:40px;border-radius:50%;flex:none;object-fit:cover}
+.rv-card .av{display:grid;place-items:center;background:var(--navy);color:#fff;font:600 1rem var(--ff-head)}
+.rv-card p{margin:0;font-size:.96rem;line-height:1.6;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.rv-card.open p{-webkit-line-clamp:unset;display:block}
+.rv-more{align-self:flex-start;background:none;border:0;padding:0;color:var(--sky);font:500 .9rem var(--ff-body);cursor:pointer}
+@media(max-width:1000px){.rv-track{grid-auto-columns:calc((100% - 20px)/2)}}
+@media(max-width:620px){.rv-track{grid-auto-columns:86%}.rv-btn{display:none}}
+
+/* ---------- Instagram grid (own code) */
+.ig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ig-tile{position:relative;display:block;aspect-ratio:1;overflow:hidden;border-radius:10px;background:var(--sand)}
+.ig-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.ig-tile:hover img{transform:scale(1.06)}
+.ig-hover{position:absolute;inset:0;display:grid;place-items:center;background:rgba(7,28,42,.45);color:#fff;opacity:0;transition:opacity .3s}
+.ig-hover svg{width:30px;height:30px}
+.ig-tile:hover .ig-hover,.ig-tile:focus-visible .ig-hover{opacity:1}
+.ig-reel{position:absolute;top:10px;right:10px;color:#fff;font-size:.8rem;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+@media(max-width:760px){.ig-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+
+/* ---------- Hero motion */
+.hero.motion img.bg{will-change:transform;transform:scale(1.12);transform-origin:50% 35%}
+.hero.motion .wrap,.hero.motion .coords{will-change:transform,opacity}
+@keyframes heroIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes heroImg{from{opacity:0}to{opacity:.9}}
+.hero img.bg{animation:heroImg 1.2s ease-out both}
+.hero .wrap>*{animation:heroIn .9s cubic-bezier(.2,.7,.2,1) both}
+.hero .wrap>*:nth-child(2){animation-delay:.12s}
+.hero .wrap>*:nth-child(3){animation-delay:.24s}
+.hero .wrap>*:nth-child(4){animation-delay:.36s}
+@media (prefers-reduced-motion:reduce){.hero img.bg,.hero .wrap>*{animation:none}}

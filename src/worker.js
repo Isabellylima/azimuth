@@ -10,6 +10,7 @@
 //   ADMIN_KEY    secret used to sign confirm/decline links and open /api/admin
 //   RESEND_API_KEY (optional) fallback e-mail provider
 import PROGRAMS from './programs.json';
+import { social, refreshSocial } from './social.js';
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
@@ -206,6 +207,8 @@ export default {
         if (url.pathname === '/api/booking' && request.method === 'POST') return booking(request, env, ctx);
         if (url.pathname === '/api/decide') return decide(url, env);
         if (url.pathname === '/api/admin') return admin(url, env);
+        const s = await social(url, env);
+        if (s) return s;
       } catch (e) { console.error(e); return json({ ok: false, error: 'server_error' }, 500); }
       return json({ ok: false, error: 'not_found' }, 404);
     }
@@ -216,4 +219,6 @@ export default {
     }
     return res;
   },
+  // every 6 hours: refresh Google reviews + Instagram and copy new pictures
+  async scheduled(event, env, ctx) { ctx.waitUntil(refreshSocial(env)); },
 };

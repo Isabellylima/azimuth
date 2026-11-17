@@ -8,6 +8,8 @@ import { SITE, PHOTOS, PROGRAMS, BOAT, FAQ, photoRemote } from './src/content.mj
 
 const OUT = 'public';
 const legacy = JSON.parse(await readFile('src/legacy.json', 'utf8'));
+const REVIEWS = JSON.parse(await readFile('src/reviews.json', 'utf8'));
+const IG = JSON.parse(await readFile('src/instagram.json', 'utf8'));
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 const { createHash } = await import('node:crypto');
 const ver = async f => createHash('sha1').update(await readFile(join('public/assets', f))).digest('hex').slice(0, 10);
@@ -40,6 +42,27 @@ const img = (k, L, { cls = '', eager = false, sizes = '(max-width: 800px) 100vw,
 
 // ------------------------------------------------------------- helpers
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// ---------- Google reviews + Instagram (own code, replaces Elfsight; site.js refreshes them from /api/*)
+const G_ICON = '<svg class="g-ico" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.5z"/></svg>';
+const stars = n => `<span class="stars" role="img" aria-label="${n}/5">${'★'.repeat(Math.round(n))}${'☆'.repeat(5 - Math.round(n))}</span>`;
+const monthYear = (d, L) => d ? new Date(d.length === 7 ? d + '-15' : d).toLocaleDateString(L === 'pt' ? 'pt-PT' : 'en-GB', { month: 'long', year: 'numeric' }) : '';
+const MAPS = 'https://www.google.com/maps?cid=5744400195281062448';
+function reviewsBlock(L) {
+  const t = L === 'pt' ? { on: 'avaliações no Google', write: 'Escrever uma avaliação', more: 'Ler mais', prev: 'Anterior', next: 'Seguinte' }
+                       : { on: 'reviews on Google', write: 'Write a review', more: 'Read more', prev: 'Previous', next: 'Next' };
+  const list = [...REVIEWS.reviews].sort((a, b) => (b.lang === L) - (a.lang === L));
+  const card = r => `<article class="rv-card"><header>${r.photo ? `<img src="${esc(r.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="av">${esc(r.name.trim()[0].toUpperCase())}</span>`}<div><b>${esc(r.name)}</b><small>${monthYear(r.date, L)}</small></div>${G_ICON}</header>${stars(r.rating)}<p lang="${r.lang || L}">${esc(r.text)}</p><button type="button" class="rv-more" hidden>${t.more}</button></article>`;
+  return `<div class="rv" data-reviews data-lang="${L}" data-i18n='${JSON.stringify(t)}'>
+  <div class="rv-sum"><a href="${MAPS}" target="_blank" rel="noopener" class="rv-score">${G_ICON}<b data-rating>${REVIEWS.rating.toFixed(1).replace('.', L === 'pt' ? ',' : '.')}</b>${stars(REVIEWS.rating)}<span><span data-count>${REVIEWS.count}</span> ${t.on}</span></a>
+   <div class="rv-nav"><button type="button" class="rv-btn" data-dir="-1" aria-label="${t.prev}">←</button><button type="button" class="rv-btn" data-dir="1" aria-label="${t.next}">→</button><a class="btn ghost small" href="${MAPS}" target="_blank" rel="noopener">${t.write}</a></div></div>
+  <div class="rv-track" tabindex="0">${list.map(card).join('')}</div></div>`;
+}
+function instagramBlock(L) {
+  const IG_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>';
+  const tile = p => `<a class="ig-tile" href="${esc(p.permalink)}" target="_blank" rel="noopener" aria-label="Instagram · ${monthYear(p.date, L)}"><img src="/api/ig/${esc(p.id)}.jpg" alt="${L === 'pt' ? 'Publicação de' : 'Post by'} @azimuthholidays · ${monthYear(p.date, L)}" loading="lazy" width="640" height="640">${p.type === 'VIDEO' ? '<span class="ig-reel" aria-hidden="true">▶</span>' : ''}<span class="ig-hover">${IG_ICON}</span></a>`;
+  return `<div class="ig-grid" data-instagram data-lang="${L}">${IG.posts.map(tile).join('')}</div>`;
+}
+
 const eur = (n, L) => new Intl.NumberFormat(L === 'pt' ? 'pt-PT' : 'en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
 const fdate = (s, L, o = { day: 'numeric', month: 'short', year: 'numeric' }) => new Date(s + 'T12:00:00Z').toLocaleDateString(L === 'pt' ? 'pt-PT' : 'en-GB', o);
 const pages = []; // for sitemap
@@ -252,13 +275,13 @@ function homePage(L) {
 </div></section>
 
 <section class="bg-sand" id="reviews"><div class="wrap">
-  <div class="section-head"><div><span class="eyebrow">Google</span><h2>${t.revH}</h2></div><a class="btn ghost" href="${SITE.googleReviewsUrl}" target="_blank" rel="noopener">${t.revBtn} →</a></div>
-  <div class="widget-box" data-elfsight><div class="elfsight-app-${SITE.elfsight.reviews}" data-elfsight-app-lazy></div></div>
+  <div class="section-head"><div><span class="eyebrow">Google</span><h2>${t.revH}</h2></div><a class="btn ghost" href="${MAPS}" target="_blank" rel="noopener">${t.revBtn} →</a></div>
+  ${reviewsBlock(L)}
 </div></section>
 
 <section id="instagram"><div class="wrap">
   <div class="section-head"><div><span class="eyebrow">Instagram</span><h2>${t.igH}</h2></div><a class="btn ghost" href="${SITE.instagram}" target="_blank" rel="noopener">${t.igBtn} →</a></div>
-  <div class="widget-box" data-elfsight><div class="elfsight-app-${SITE.elfsight.instagram}" data-elfsight-app-lazy></div></div>
+  ${instagramBlock(L)}
 </div></section>
 
 <section class="bg-sand" id="faq"><div class="wrap">

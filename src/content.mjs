@@ -14,15 +14,10 @@ export const SITE = {
   email: 'azimuthboatrent@gmail.com',
   instagram: 'https://www.instagram.com/azimuthholidays/',
   facebook: 'https://www.facebook.com/azimuthholidays',
-  googleReviewsUrl: 'https://www.google.com/search?q=Azimuth+Holidays+Lagos+sailing',
+  googleReviewsUrl: 'https://www.google.com/maps?cid=5744400195281062448',
   address: { street: 'Marina de Lagos', locality: 'Lagos', region: 'Faro', postalCode: '8600-780', country: 'PT' },
   geo: { lat: 37.1083, lng: -8.6702 },
   captain: 'Manuel Lopes',
-  // Elfsight widgets already used on the old site (Google reviews + Instagram feed)
-  elfsight: {
-    reviews: 'd0e931b3-db4b-403a-a3e3-7483a3764f91',
-    instagram: '1ff4f465-2dc1-4eef-bb0d-d29fb07591c1',
-  },
 };
 
 const CDN = 'https://images.squarespace-cdn.com/content/v1/687006fbf205f9248e3992e8/';

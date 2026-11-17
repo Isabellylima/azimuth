@@ -20,7 +20,10 @@ The boat is shared: Lagos tours share morning/afternoon/evening slots, and every
 - E-mail sending: Cloudflare Email Service binding `EMAIL` (needs azimuthholidays.com onboarded) **or** `RESEND_API_KEY` secret.
 
 ## Reviews & Instagram
-Elfsight widgets (Google reviews + Instagram feed), IDs in `SITE.elfsight`.
+Google reviews + Instagram feed are the site's own code (no Elfsight). They show the saved
+reviews/posts in `src/reviews.json` and `src/instagram.json`, and go live automatically once these
+secrets are set on the Worker: `GOOGLE_PLACES_KEY` (Places API New) and `IG_ACCESS_TOKEN`
+(Instagram long-lived token, refreshed automatically). A cron refreshes them every 6 hours.
 
 ## SEO / AI
 Per-page title/description, canonical + hreflang, JSON-LD (TravelAgency, TouristTrip, Event per departure, FAQPage, BreadcrumbList), `sitemap.xml`, `robots.txt` (AI crawlers allowed), `llms.txt`. Old Squarespace URLs are 301-redirected (`public/_redirects`).
