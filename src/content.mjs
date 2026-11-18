@@ -15,8 +15,8 @@ export const SITE = {
   instagram: 'https://www.instagram.com/azimuthholidays/',
   facebook: 'https://www.facebook.com/azimuthholidays',
   googleReviewsUrl: 'https://www.google.com/maps?cid=5744400195281062448',
-  address: { street: 'Marina de Lagos', locality: 'Lagos', region: 'Faro', postalCode: '8600-780', country: 'PT' },
-  geo: { lat: 37.1083, lng: -8.6702 },
+  address: { street: 'Cais F, Marina de Lagos', locality: 'Lagos', region: 'Faro', postalCode: '8600-315', country: 'PT' },
+  geo: { lat: 37.1099932, lng: -8.6738976 },
   captain: 'Manuel Lopes',
 };
 

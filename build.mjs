@@ -408,9 +408,9 @@ function contactPage(L) {
   <p class="lead"><b>${L === 'pt' ? 'Telefone' : 'Phone'}</b><br><a href="tel:+${SITE.whatsapp}">${SITE.phoneDisplay}</a></p>
   <p class="lead"><b>WhatsApp</b><br><a href="https://wa.me/${SITE.whatsapp}" target="_blank" rel="noopener">${SITE.phoneDisplay}</a></p>
   <p class="lead"><b>E-mail</b><br><a href="mailto:${SITE.email}">${SITE.email}</a></p>
-  <p class="lead"><b>${L === 'pt' ? 'Ponto de partida' : 'Departure point'}</b><br>Marina de Lagos, 8600-780 Lagos, Portugal</p>
+  <p class="lead"><b>${L === 'pt' ? 'Ponto de partida' : 'Departure point'}</b><br>Cais F, Marina de Lagos, 8600-315 Lagos, Portugal</p>
   <p class="lead"><b>Instagram</b><br><a href="${SITE.instagram}" target="_blank" rel="noopener">@azimuthholidays</a></p>
-  <iframe title="Marina de Lagos" loading="lazy" style="width:100%;height:300px;border:0;border-radius:14px" src="https://www.google.com/maps?q=Marina+de+Lagos,+Portugal&output=embed"></iframe>
+  <iframe title="Marina de Lagos" loading="lazy" style="width:100%;height:300px;border:0;border-radius:14px" src="https://www.google.com/maps?q=37.1099932,-8.6738976&z=16&output=embed"></iframe>
  </div>
  <form class="booking" id="enquiry" style="position:static" novalidate>
   <header><small>${t.fh}</small></header><div class="body">
@@ -485,7 +485,7 @@ function llms() {
 > Family-run sailing company based at Marina de Lagos, Algarve, Portugal (${SITE.legalName}). Private skippered sailing tours in Lagos and Atlantic sailing expeditions (sea crossings Lagos–Porto Santo–Azores and Azores island-hopping) aboard the sailing yacht Angela, a 15 m Bavaria 49 with 5 cabins, 3 bathrooms, up to 8 guests overnight and 10 on day trips. Skipper: Captain ${SITE.captain}. Languages: English and Portuguese. Website in English and European Portuguese (/pt/).
 
 Key facts:
-- Departure point for Lagos tours: Marina de Lagos, 8600-780 Lagos, Portugal.
+- Departure point for Lagos tours: Cais F, Marina de Lagos, 8600-315 Lagos, Portugal.
 - All Lagos tours are private (the boat is exclusive to one group).
 - Booking: online request with calendar on each experience page, confirmed by email; 50% deposit, balance one month before. Cancellation ≥30 days: up to 50%; <30 days: up to 100%.
 - Contact: WhatsApp https://wa.me/${SITE.whatsapp} · ${SITE.email} · Instagram ${SITE.instagram}
