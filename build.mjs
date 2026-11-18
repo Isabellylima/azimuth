@@ -405,6 +405,7 @@ function contactPage(L) {
 <section><div class="wrap split" style="align-items:start">
  <div>
   <span class="eyebrow">Azimuth Sailing Holidays</span>
+  <p class="lead"><b>${L === 'pt' ? 'Telefone' : 'Phone'}</b><br><a href="tel:+${SITE.whatsapp}">${SITE.phoneDisplay}</a></p>
   <p class="lead"><b>WhatsApp</b><br><a href="https://wa.me/${SITE.whatsapp}" target="_blank" rel="noopener">${SITE.phoneDisplay}</a></p>
   <p class="lead"><b>E-mail</b><br><a href="mailto:${SITE.email}">${SITE.email}</a></p>
   <p class="lead"><b>${L === 'pt' ? 'Ponto de partida' : 'Departure point'}</b><br>Marina de Lagos, 8600-780 Lagos, Portugal</p>

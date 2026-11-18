@@ -9,8 +9,8 @@ export const SITE = {
   name: 'Azimuth Sailing Holidays',
   legalName: 'Azimuth Sphere Lda.',
   // ⚠️ Replace with the real numbers/addresses (also used by the booking API).
-  whatsapp: '351000000000',          // digits only, with country code
-  phoneDisplay: '+351 000 000 000',
+  whatsapp: '351938201296',          // digits only, with country code
+  phoneDisplay: '+351 938 201 296',
   email: 'azimuthboatrent@gmail.com',
   instagram: 'https://www.instagram.com/azimuthholidays/',
   facebook: 'https://www.facebook.com/azimuthholidays',
